@@ -4,7 +4,7 @@
 
 // Package blake2b implements the BLAKE2b hash algorithm as
 // defined in RFC 7693.
-package blake2b // import "golang.org/x/crypto/blake2b"
+package blake2b
 
 import (
 	"encoding/binary"
@@ -21,6 +21,8 @@ const (
 	Size384 = 48
 	// The hash size of BLAKE2b-256 in bytes.
 	Size256 = 32
+	// The hash size of BLAKE2b-192 in bytes.
+	Size192 = 24
 )
 
 var (
@@ -59,6 +61,15 @@ func Sum256(data []byte) [Size256]byte {
 	checkSum(&sum, Size256, data)
 	copy(sum256[:], sum[:Size256])
 	return sum256
+}
+
+// Sum192 returns the BLAKE2b-192 checksum of the data.
+func Sum192(data []byte) [Size192]byte {
+	var sum [Size]byte
+	var sum192 [Size192]byte
+	checkSum(&sum, Size192, data)
+	copy(sum192[:], sum[:Size192])
+	return sum192
 }
 
 // New512 returns a new hash.Hash computing the BLAKE2b-512 checksum. A non-nil
