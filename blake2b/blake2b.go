@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+<<<<<<< HEAD
 // Package blake2b implements the BLAKE2b hash algorithm defined by RFC 7693
 // and the extendable output function (XOF) BLAKE2Xb.
 //
@@ -14,6 +15,10 @@
 //
 // BLAKE2X is a construction to compute hash values larger than 64 bytes. It
 // can produce hash values between 0 and 4 GiB.
+=======
+// Package blake2b implements the BLAKE2b hash algorithm as
+// defined in RFC 7693.
+>>>>>>> add blake2b Sum192, which is used in an anonymous libsodium sealed box:
 package blake2b
 
 import (
@@ -31,6 +36,8 @@ const (
 	Size384 = 48
 	// The hash size of BLAKE2b-256 in bytes.
 	Size256 = 32
+	// The hash size of BLAKE2b-192 in bytes.
+	Size192 = 24
 )
 
 var (
@@ -72,6 +79,15 @@ func Sum256(data []byte) [Size256]byte {
 	checkSum(&sum, Size256, data)
 	copy(sum256[:], sum[:Size256])
 	return sum256
+}
+
+// Sum192 returns the BLAKE2b-192 checksum of the data.
+func Sum192(data []byte) [Size192]byte {
+	var sum [Size]byte
+	var sum192 [Size192]byte
+	checkSum(&sum, Size192, data)
+	copy(sum192[:], sum[:Size192])
+	return sum192
 }
 
 // New512 returns a new hash.Hash computing the BLAKE2b-512 checksum. A non-nil
