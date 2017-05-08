@@ -30,12 +30,14 @@ import (
 // These constants represent the algorithm names for key types supported by this
 // package.
 const (
-	KeyAlgoRSA      = "ssh-rsa"
-	KeyAlgoDSA      = "ssh-dss"
-	KeyAlgoECDSA256 = "ecdsa-sha2-nistp256"
-	KeyAlgoECDSA384 = "ecdsa-sha2-nistp384"
-	KeyAlgoECDSA521 = "ecdsa-sha2-nistp521"
-	KeyAlgoED25519  = "ssh-ed25519"
+	KeyAlgoRSA       = "ssh-rsa"
+	KeyAlgoRSASHA256 = "rsa-sha2-256"
+	KeyAlgoRSASHA512 = "rsa-sha2-512"
+	KeyAlgoDSA       = "ssh-dss"
+	KeyAlgoECDSA256  = "ecdsa-sha2-nistp256"
+	KeyAlgoECDSA384  = "ecdsa-sha2-nistp384"
+	KeyAlgoECDSA521  = "ecdsa-sha2-nistp521"
+	KeyAlgoED25519   = "ssh-ed25519"
 )
 
 // parsePubKey parses a public key of the given algorithm.
@@ -348,13 +350,21 @@ func (r *rsaPublicKey) Marshal() []byte {
 }
 
 func (r *rsaPublicKey) Verify(data []byte, sig *Signature) error {
-	if sig.Format != r.Type() {
+	var hashId crypto.Hash
+	switch sig.Format {
+	case KeyAlgoRSA:
+		hashId = crypto.SHA1
+	case KeyAlgoRSASHA256:
+		hashId = crypto.SHA256
+	case KeyAlgoRSASHA512:
+		hashId = crypto.SHA512
+	default:
 		return fmt.Errorf("ssh: signature type %s for key type %s", sig.Format, r.Type())
 	}
-	h := crypto.SHA1.New()
+	h := hashId.New()
 	h.Write(data)
 	digest := h.Sum(nil)
-	return rsa.VerifyPKCS1v15((*rsa.PublicKey)(r), crypto.SHA1, digest, sig.Blob)
+	return rsa.VerifyPKCS1v15((*rsa.PublicKey)(r), hashId, digest, sig.Blob)
 }
 
 func (r *rsaPublicKey) CryptoPublicKey() crypto.PublicKey {
