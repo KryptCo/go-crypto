@@ -30,12 +30,14 @@ import (
 // These constants represent the algorithm names for key types supported by this
 // package.
 const (
-	KeyAlgoRSA      = "ssh-rsa"
-	KeyAlgoDSA      = "ssh-dss"
-	KeyAlgoECDSA256 = "ecdsa-sha2-nistp256"
-	KeyAlgoECDSA384 = "ecdsa-sha2-nistp384"
-	KeyAlgoECDSA521 = "ecdsa-sha2-nistp521"
-	KeyAlgoED25519  = "ssh-ed25519"
+	KeyAlgoRSA       = "ssh-rsa"
+	KeyAlgoRSASHA256 = "rsa-sha2-256"
+	KeyAlgoRSASHA512 = "rsa-sha2-512"
+	KeyAlgoDSA       = "ssh-dss"
+	KeyAlgoECDSA256  = "ecdsa-sha2-nistp256"
+	KeyAlgoECDSA384  = "ecdsa-sha2-nistp384"
+	KeyAlgoECDSA521  = "ecdsa-sha2-nistp521"
+	KeyAlgoED25519   = "ssh-ed25519"
 )
 
 // These constants represent non-default signature algorithms that are supported

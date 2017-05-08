@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-<<<<<<< HEAD
 // Package blake2b implements the BLAKE2b hash algorithm defined by RFC 7693
 // and the extendable output function (XOF) BLAKE2Xb.
 //
@@ -15,10 +14,6 @@
 //
 // BLAKE2X is a construction to compute hash values larger than 64 bytes. It
 // can produce hash values between 0 and 4 GiB.
-=======
-// Package blake2b implements the BLAKE2b hash algorithm as
-// defined in RFC 7693.
->>>>>>> add blake2b Sum192, which is used in an anonymous libsodium sealed box:
 package blake2b
 
 import (
